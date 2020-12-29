@@ -1,0 +1,174 @@
+#app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.box {
+    position: absolute;
+}
+
+.box.variables {
+    --bgColor: rgb(31, 31, 31);
+    --frColor: rgb(1, 114, 76);
+    --big-containerWidth: calc(100% - 300px);
+    --lg-containerWidth: calc(100% - 100px);
+    --sm-containerWidth: calc(100% - 50px);
+    --big-contentHeight: calc(100vh - 200px);
+    --lg-contentHeight: calc(100vh - 100px);
+    --sm-contentHeight: calc(100vh - 80px);
+    --borderSize: 2px;
+    --timer1: 2s;
+    --timer2: 3s;
+}
+
+.box.screen {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bgColor);
+}
+
+.box .container {
+    position: absolute;
+    width: var(--big-containerWidth);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 768px) {
+    .box .container {
+        width: var(--lg-containerWidth);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .box .container {
+        width: var(--sm-containerWidth);
+    }
+}
+
+.box .container::before,
+.box .container::after {
+    content: "";
+    position: absolute;
+    width: 100vw;
+    height: var(--borderSize);
+    background-color: var(--frColor);
+}
+
+@keyframes elongation {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.box .container::before {
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    animation: elongation var(--timer1) 0s ease 1 forwards;
+}
+
+.box .container::after {
+    bottom: 0;
+    right: 0;
+    transform-origin: right;
+    animation: elongation var(--timer1) 0s ease 1 forwards;
+}
+
+@keyframes open-big-content {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--big-contentHeight);
+    }
+}
+
+@keyframes open-lg-content {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--lg-contentHeight);
+    }
+}
+
+@keyframes open-sm-content {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--sm-contentHeight);
+    }
+}
+
+.box .container .content {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border-left: var(--frColor) solid var(--borderSize);
+    border-right: var(--frColor) solid var(--borderSize);
+    animation: open-big-content var(--timer2) var(--timer1) ease 1 forwards;
+}
+
+@media screen and (max-width: 768px) {
+    .box .container .content {
+        animation: open-lg-content var(--timer2) var(--timer1) ease 1 forwards;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .box .container .content {
+        animation: open-sm-content var(--timer2) var(--timer1) ease 1 forwards;
+    }
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent;
+    }
+}
+
+.box .container .content .text {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font: 200% monospace;
+    word-break: break-all;
+    color: var(--frColor);
+}
+
+.box .container .content .text::after {
+    content: " ";
+    animation: blink-caret 0.5s step-end infinite alternate;
+    border-right: 0.08em solid;
+}
+
+@keyframes start-icp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+}
+
+#icp {
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    padding: 20px 0;
+    text-align: center;
+    animation: start-icp 2s 0s ease 1;
+}
+
+#icp a {
+    color: rgb(1, 114, 76);
+}
